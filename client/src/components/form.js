@@ -122,8 +122,9 @@ const Form = (props) => {
       magnet: magnet,
     };
     let response;
+    let url = process?.env?.NODE_ENV === "development" ? "http://localhost:3000/torrent" : "/torrent";
     try {
-      response = await axios.post("http://localhost:3000/torrent", formData, {
+      response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",
         },

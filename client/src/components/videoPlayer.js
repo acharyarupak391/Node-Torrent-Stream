@@ -2,23 +2,23 @@ import React from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { PlayCircleFilledOutlined } from "@material-ui/icons";
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 
 const useStyles = makeStyles(() => ({
   grid: {
     margin: "50px auto",
     padding: "15px 10px",
     background: "#8b000036",
-    borderRadius: 2
+    borderRadius: 2,
   },
   playIcon: {
-    marginRight: 10
+    marginRight: 10,
   },
   typoGrid: {
     display: "flex",
     alignItems: "center",
     margin: "15px 2.5%",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   ml10: {
     marginLeft: 10,
@@ -34,13 +34,19 @@ const useStyles = makeStyles(() => ({
   },
   btn: {
     marginLeft: "auto",
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
 }));
 
 const VideoPlayer = ({ video }) => {
   const c = useStyles();
-  
+  const [url] = React.useState(
+    video &&
+      (process?.env?.NODE_ENV === "development"
+        ? `http://localhost:3000/stream?index=${video?.index}`
+        : `/stream?index=${video?.index}`)
+  );
+
   function download(fileUrl, fileName) {
     var a = document.createElement("a");
     a.href = fileUrl;
@@ -48,17 +54,16 @@ const VideoPlayer = ({ video }) => {
     a.click();
   }
 
-  const handleDownloadClick = (videoIndex, fileName) => {
-    download(`http://localhost:3000/stream?index=${videoIndex}`, fileName);
-  }
+  const handleDownloadClick = (fileName) => {
+    download(url, fileName);
+  };
 
   return (
     <Grid xs={10} sm={8} lg={6} className={c.grid}>
       {parseInt(video?.index) !== NaN && (
         <video id="videoPlayer" controls style={{ width: "95%" }}>
           <source
-            src={`http://localhost:3000/stream?index=${video.index}`}
-            // src={`/sample-mkv-file.mkv`}
+            src={url}
             type="video/mp4"
           />
         </video>
@@ -75,7 +80,7 @@ const VideoPlayer = ({ video }) => {
           size="small"
           startIcon={<CloudDownloadIcon />}
           variant="outlined"
-          onClick={() => handleDownloadClick(video?.index, video?.data?.name)}
+          onClick={() => handleDownloadClick(video?.data?.name)}
         >
           Download
         </Button>

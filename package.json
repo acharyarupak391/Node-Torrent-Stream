@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build-n-run": "cd client/ && npm run build && cd ../ && npm start"
+    "build-n-run": "cd client/ && npm i && npm run build && rm -rf node_modules && cd ../ && npm start"
   },
   "author": "Rupak",
   "license": "ISC",

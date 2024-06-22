@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { PlayCircleFilledOutlined } from "@material-ui/icons";
@@ -40,11 +40,9 @@ const useStyles = makeStyles(() => ({
 
 const VideoPlayer = ({ video }) => {
   const c = useStyles();
-  const [url] = React.useState(
-    video &&
-      (process?.env?.NODE_ENV === "development"
-        ? `http://localhost:3000/stream?index=${video?.index}`
-        : `/stream?index=${video?.index}`)
+  const url = useMemo(
+    () => `${process.env.REACT_APP_SERVER_URL}/stream?index=${video.index}`,
+    [video]
   );
 
   function download(fileUrl, fileName) {
@@ -60,12 +58,9 @@ const VideoPlayer = ({ video }) => {
 
   return (
     <Grid xs={10} sm={8} lg={6} className={c.grid}>
-      {parseInt(video?.index) !== NaN && (
+      {!isNaN(parseInt(video?.index)) && (
         <video id="videoPlayer" controls style={{ width: "95%" }}>
-          <source
-            src={url}
-            type="video/mp4"
-          />
+          <source src={url} type="video/mp4" />
         </video>
       )}
       <Typography className={c.typoGrid}>

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import ListIcon from "@material-ui/icons/List";
 import MovieIcon from "@material-ui/icons/Movie";
-import "./style.css"
+import "./style.css";
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
     background: "aliceblue",
     padding: 3,
     marginBottom: 5,
-  }
+  },
 }));
 
 const FileList = ({ files, setCurrentStep }) => {
@@ -78,7 +78,7 @@ const FileList = ({ files, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    if (files && files !== {}) {
+    if (files) {
       setFileData(filterData(files));
     }
   }, [files]);
@@ -102,6 +102,7 @@ const FileList = ({ files, setCurrentStep }) => {
                 variant="subtitle2"
                 className={`${c.typoGrid} ${c.listItem} textWrapper`}
                 onClick={() => handleFileClick(i, file)}
+                key={i}
               >
                 <MovieIcon />
                 <span className={`${c.ml5} ${c.fileName}`}>{file.name}</span>

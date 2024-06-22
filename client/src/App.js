@@ -7,8 +7,8 @@ import VideoPlayer from "./components/videoPlayer";
 
 function App() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [filesData, setFilesData] = useState({});
-  const [videoData, setVideoData] = useState({});
+  const [filesData, setFilesData] = useState(null);
+  const [videoData, setVideoData] = useState(null);
 
   const changeAppStep = (step, data) => {
     setCurrentStep(step);
@@ -20,11 +20,10 @@ function App() {
     <div className="App">
       <Header setCurrentStep={changeAppStep} />
       {currentStep === 0 && <Form setCurrentStep={changeAppStep} />}
-      {currentStep === 1 && (
+      {currentStep === 1 && filesData && (
         <FileList files={filesData} setCurrentStep={changeAppStep} />
       )}
-      {currentStep === 2 && <VideoPlayer video={videoData} />}
-      {/* <VideoPlayer video={videoData} /> */}
+      {currentStep === 2 && videoData && <VideoPlayer video={videoData} />}
     </div>
   );
 }

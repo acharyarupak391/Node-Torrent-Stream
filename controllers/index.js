@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require("path");
 
 const Torrent = require("../models");
 let t;
@@ -25,15 +25,15 @@ module.exports = {
   getTorrentData: async (req, res) => {
     setTimeout(() => {
       if (!res.headersSent) {
-        return res.status(408).json({ error: "Took too long get the torrent data" });
+        return res
+          .status(408)
+          .json({ error: "Took too long get the torrent data" });
       }
     }, 20000);
 
     if (!checkFileType(req)) {
       if (!res.headersSent) {
-        return res
-          .status(422)
-          .json({ error: "Invalid torrent file provided" });
+        return res.status(422).json({ error: "Invalid torrent file provided" });
       }
     }
 
@@ -44,9 +44,8 @@ module.exports = {
   },
 
   streamTorrent: async (req, res) => {
-    console.log("/stream endpoint called!!!!");
     const index = req.query?.index;
-    if(!index) {
+    if (!index) {
       return res.status(400).json({ error: "No file index provided!" });
     }
 

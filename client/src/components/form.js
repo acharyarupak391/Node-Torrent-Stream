@@ -118,13 +118,10 @@ const Form = (props) => {
     const formData = new FormData();
     if (magnet) formData.append("magnet", magnet);
     else if (file) formData.append("file", file);
-    let data = {
-      magnet: magnet,
-    };
-    let response;
-    let url = process?.env?.NODE_ENV === "development" ? "http://localhost:3000/torrent" : "/torrent";
+
+    const url = `${process.env.REACT_APP_SERVER_URL}/torrent`;
     try {
-      response = await axios.post(url, formData, {
+      const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",
         },
